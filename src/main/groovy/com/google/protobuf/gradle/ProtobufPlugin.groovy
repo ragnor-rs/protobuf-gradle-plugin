@@ -372,14 +372,6 @@ class ProtobufPlugin implements Plugin<Project> {
     }
 
     private linkGenerateProtoTasksToJavaCompile() {
-      if (Utils.isAndroidProject(project)) {
-        (getNonTestVariants() + project.android.testVariants).each { variant ->
-          project.protobuf.generateProtoTasks.ofVariant(variant.name).each { generateProtoTask ->
-            // This cannot be called once task execution has started
-            variant.registerJavaGeneratingTask(generateProtoTask, generateProtoTask.getAllOutputDirs())
-          }
-        }
-      } else {
         project.sourceSets.each { sourceSet ->
           def javaCompileTask = project.tasks.getByName(sourceSet.getCompileTaskName("java"))
           project.protobuf.generateProtoTasks.ofSourceSet(sourceSet.name).each { generateProtoTask ->
@@ -389,7 +381,6 @@ class ProtobufPlugin implements Plugin<Project> {
             }
           }
         }
-      }
     }
 
     private String getExtractedIncludeProtosDir(String sourceSetName) {
