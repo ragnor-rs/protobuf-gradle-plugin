@@ -50,6 +50,10 @@ android {
         exclude 'io/grpc/testing/integration/messages.proto'
         exclude 'tmp/stuff.proto'
     }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
 }
 
 protobuf {
